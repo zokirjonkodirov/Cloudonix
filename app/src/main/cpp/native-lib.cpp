@@ -5,10 +5,22 @@
 #include <arpa/inet.h>
 #include <net/if.h>
 
+/**
+ * Checks if the given IPv6 address is a global unicast address.
+ *
+ * @param addr Pointer to an in6_addr structure representing the IPv6 address.
+ * @return True if the address is a global unicast address, false otherwise.
+ */
 bool isGlobalUnicastIPv6(const struct in6_addr *addr) {
     return (addr->s6_addr[0] & 0xE0) == 0x20;
 }
 
+/**
+ * Checks if the given IPv4 address is a public address.
+ *
+ * @param addr Pointer to an in_addr structure representing the IPv4 address.
+ * @return True if the address is a public IPv4 address, false otherwise.
+ */
 bool isPublicIPv4(const struct in_addr *addr) {
     uint32_t ip = ntohl(addr->s_addr);
     return !(ip >= 0x0A000000 && ip <= 0x0AFFFFFF) &&  // 10.0.0.0 - 10.255.255.255
@@ -18,7 +30,14 @@ bool isPublicIPv4(const struct in_addr *addr) {
            ip != 0x7F000001;                           // 127.0.0.1 (loopback)
 }
 
-
+/**
+ * Retrieves the IP address of the device.
+ *
+ * This function retrieves the device's IP address by iterating over the
+ * network interfaces and checking their addresses. It prefers IPv6 global
+ * unicast addresses but falls back to public IPv4 addresses if no suitable
+ * IPv6 address is found.
+ */
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_cloudonix_MainActivity_getIPAddress(JNIEnv *env, jobject /* this */) {
     struct ifaddrs *ifaddr, *ifa;
