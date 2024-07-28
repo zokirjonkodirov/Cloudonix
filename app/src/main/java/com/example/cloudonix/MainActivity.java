@@ -49,8 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
         new Thread(() -> {
             String ipAddress = getIPAddress();
-            System.out.println("IP adress" + ipAddress);
-            sendIPAddress(ipAddress);
+            if (ipAddress.equals("Error")) {
+                runOnUiThread(this::showError);
+            } else {
+                sendIPAddress(ipAddress);
+            }
         }).start();
     }
 
