@@ -24,5 +24,5 @@ Latest NDK LTS Release
 
 ## Screenshots
 
-![Screenshot](/screenshots/screenshot1.jpg)
-![Screenshot](/screenshots/screenshot2.jpg)
+<img src="screenshots/screenshot1.jpg" width="300">
+<img src="screenshots/screenshot2.jpg" width="300">
